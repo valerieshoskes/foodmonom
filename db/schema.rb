@@ -42,10 +42,10 @@ ActiveRecord::Schema.define(version: 20170208154012) do
     t.string   "reviewer"
     t.boolean  "recommend"
     t.string   "explanation"
-    t.integer  "restaurant_id_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["restaurant_id_id"], name: "index_reviews_on_restaurant_id_id"
+    t.integer  "restaurant_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id"
   end
 
 end
