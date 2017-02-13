@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170213162931) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "cuisines", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -28,22 +31,22 @@ ActiveRecord::Schema.define(version: 20170213162931) do
     t.datetime "updated_at",     null: false
     t.integer  "cuisine_id"
     t.integer  "restriction_id"
-    t.index ["cuisine_id"], name: "index_restaurants_on_cuisine_id"
-    t.index ["restriction_id"], name: "index_restaurants_on_restriction_id"
+    t.index ["cuisine_id"], name: "index_restaurants_on_cuisine_id", using: :btree
+    t.index ["restriction_id"], name: "index_restaurants_on_restriction_id", using: :btree
   end
 
   create_table "restaurants_cuisines", force: :cascade do |t|
     t.integer "cuisine_id"
     t.integer "restaurant_id"
-    t.index ["cuisine_id"], name: "index_restaurants_cuisines_on_cuisine_id"
-    t.index ["restaurant_id"], name: "index_restaurants_cuisines_on_restaurant_id"
+    t.index ["cuisine_id"], name: "index_restaurants_cuisines_on_cuisine_id", using: :btree
+    t.index ["restaurant_id"], name: "index_restaurants_cuisines_on_restaurant_id", using: :btree
   end
 
   create_table "restaurants_restrictions", force: :cascade do |t|
     t.integer "restriction_id"
     t.integer "restaurant_id"
-    t.index ["restaurant_id"], name: "index_restaurants_restrictions_on_restaurant_id"
-    t.index ["restriction_id"], name: "index_restaurants_restrictions_on_restriction_id"
+    t.index ["restaurant_id"], name: "index_restaurants_restrictions_on_restaurant_id", using: :btree
+    t.index ["restriction_id"], name: "index_restaurants_restrictions_on_restriction_id", using: :btree
   end
 
   create_table "restrictions", force: :cascade do |t|
@@ -59,7 +62,14 @@ ActiveRecord::Schema.define(version: 20170213162931) do
     t.integer  "restaurant_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id"
+    t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id", using: :btree
   end
 
+  add_foreign_key "restaurants", "cuisines"
+  add_foreign_key "restaurants", "restrictions"
+  add_foreign_key "restaurants_cuisines", "cuisines"
+  add_foreign_key "restaurants_cuisines", "restaurants"
+  add_foreign_key "restaurants_restrictions", "restaurants"
+  add_foreign_key "restaurants_restrictions", "restrictions"
+  add_foreign_key "reviews", "restaurants"
 end
