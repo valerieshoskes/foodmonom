@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208154012) do
+ActiveRecord::Schema.define(version: 20170213162931) do
 
   create_table "cuisines", force: :cascade do |t|
     t.string   "name"
@@ -30,6 +30,20 @@ ActiveRecord::Schema.define(version: 20170208154012) do
     t.integer  "restriction_id"
     t.index ["cuisine_id"], name: "index_restaurants_on_cuisine_id"
     t.index ["restriction_id"], name: "index_restaurants_on_restriction_id"
+  end
+
+  create_table "restaurants_cuisines", force: :cascade do |t|
+    t.integer "cuisine_id"
+    t.integer "restaurant_id"
+    t.index ["cuisine_id"], name: "index_restaurants_cuisines_on_cuisine_id"
+    t.index ["restaurant_id"], name: "index_restaurants_cuisines_on_restaurant_id"
+  end
+
+  create_table "restaurants_restrictions", force: :cascade do |t|
+    t.integer "restriction_id"
+    t.integer "restaurant_id"
+    t.index ["restaurant_id"], name: "index_restaurants_restrictions_on_restaurant_id"
+    t.index ["restriction_id"], name: "index_restaurants_restrictions_on_restriction_id"
   end
 
   create_table "restrictions", force: :cascade do |t|
